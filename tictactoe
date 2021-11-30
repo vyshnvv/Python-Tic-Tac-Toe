@@ -1,0 +1,259 @@
+print('<------- Tic-Tac-Toe ------>')
+
+
+
+game_is_still_going=True
+
+  
+
+#board numbering
+def Board():
+    count=0
+    for j in range(1,10):
+        print(j,end=' ')
+        count=count+1
+        if count==3:
+            count=0
+            print()
+            
+            
+    print()
+#board layout
+
+
+board=['-','-','-',
+        '-','-','-',
+        '-','-','-',]
+       
+            
+        
+
+
+
+
+
+print()
+print()
+
+
+#prints the game board with move
+def display_board():
+    print(board[0],'|',board[1],'|',board[2])
+    print(board[3],'|',board[4],'|',board[5])
+    print(board[6],'|',board[7],'|',board[8])
+
+    print()
+
+   
+
+#row check            
+def checkrows():
+    global game_is_still_going
+    listx=[]
+    listo=[]
+    k=0
+    for i in range(3):
+        for j in range(3):
+            if board[k]=='X':
+                listx.append(k)
+
+            elif board[k]=='O':
+                listo.append(k)
+            
+            if j==2:
+                if len(listx)==3:
+                    print('winner is X')
+                    game_is_still_going=False
+                    listx.clear()
+                    listo.clear()
+                elif len(listo)==3:
+                    print('winner is O')
+                    game_is_still_going=False
+                    listx.clear()
+                    listo.clear()
+                else:
+                    listx.clear()
+                    listo.clear()
+                    
+            k=k+1
+             
+
+        if game_is_still_going==False:
+            break
+        elif i==2:
+            break
+
+
+
+
+
+            
+#column check
+def checkcolumns():
+    global game_is_still_going
+    listx=[]
+    listo=[]
+    k=0
+    for i in range(3):
+        if i==1 or i==2:
+            k=k-8
+        for j in range(3):
+            if board[k]=='X':
+                listx.append(k)
+
+            elif board[k]=='O':
+                listo.append(k)
+            
+            if j==2:
+                if len(listx)==3:
+                    print('winner is X')
+                    game_is_still_going=False
+                    listx.clear()
+                    listo.clear()
+                elif len(listo)==3:
+                    print('winner is O')
+                    game_is_still_going=False
+                    listx.clear()
+                    listo.clear()
+                else:
+                    listx.clear()
+                    listo.clear()
+                
+            k=k+3
+            
+             
+
+        if game_is_still_going==False:
+            break
+        elif i==2:
+            break
+
+
+#diagonalcheck    
+def checkdiagonals():
+    global game_is_still_going
+    listx=[]
+    listo=[]
+    k=0
+    for i in range(2):
+        if i==1:
+            k=2
+        for j in range(3):
+            if board[k]=='X':
+                listx.append(k)
+            elif board[k]=='O':
+                listo.append(k)
+            if j==2:
+                if len(listx)==3:
+                    print('winner is X')
+                    game_is_still_going=False
+                    listx.clear()
+                    listo.clear()
+                    
+                elif len(listo)==3:
+                    print('winner is O')
+                    game_is_still_going=False
+                    listx.clear()
+                    listo.clear()
+                    
+                else:
+                    listx.clear()
+                    listo.clear()
+            if i==1:    
+                k=k+2
+            else:
+                k=k+4
+            
+             
+
+        if game_is_still_going==False:
+            break
+        elif i==2:
+            break
+            
+
+#check tie
+def checktie():
+    listtie=[]
+    for i in board:
+        if i=='X' or i=='O':
+            listtie.append(i)
+    if len(listtie)==9:
+        print('Tie')
+        listx.clear()
+        listo.clear()
+        
+
+
+
+#checks winning 
+def checkwin():
+    global game_is_still_going
+    checkrows()
+    if game_is_still_going==False:
+        return 
+    checkcolumns()
+    if game_is_still_going==False:
+        return 
+    checkdiagonals()
+    if game_is_still_going==False:
+        return 
+    checktie()
+    if game_is_still_going==False:
+        return 
+
+
+        
+            
+        
+#player1 input   
+def handleplayer1():
+        
+        pos=int(input('player 1(X) enter(1 to 9):'))   
+        pos=pos-1
+        board[pos]='X'
+        display_board()
+        checkwin()
+
+
+#player2 input        
+def handleplayer2():
+        pos=int(input('player 2(O) enter(1 to 9):'))   
+        pos=pos-1
+        board[pos]='O'
+        display_board()
+        checkwin()
+        
+    
+    
+    
+#main 
+def gameplay():
+    Board()
+    display_board()
+    while game_is_still_going:
+        handleplayer1()
+        if game_is_still_going==False:
+            break
+        handleplayer2()
+        if game_is_still_going==False:
+            break
+    if game_is_still_going==False:
+        return False
+
+
+if gameplay()==False:
+    a=input('play again? (y/n):')
+    if a=='y':
+        game_is_still_going=True
+        board=['-','-','-',
+              '-','-','-',
+              '-','-','-',]
+        gameplay()
+        
+    else:
+        print('game over')
+        
+while game_is_still_going:               
+    Board()
+    gameplay()      
